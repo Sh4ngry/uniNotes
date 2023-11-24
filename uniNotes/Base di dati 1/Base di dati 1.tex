@@ -1,6 +1,7 @@
 \documentclass{article}
 \usepackage{hyperref,graphicx}
-
+\usepackage[margin=3cm]{geometry}
+\usepackage[most]{tcolorbox}
 \title{Base di Dati 1}
 \author{Riccardo Cara}
 
@@ -119,72 +120,144 @@
             è un modello basato su oggetti (persona, macchina, animale), gli attributi descrivono lo stato dell'oggetto
         \end{itemize}
         %
-    \subsection{Modello relazionale}
-        È già stato definito il Modello relazionale nella precedente sezione, si vuole ora approfondire l'argomento.
-        Il modello relazionale si basa sulla nozione matematica di relazione. Si definisce con \textit{dominio} (D) un insieme di valori, un sottoinsieme del prodotto cartesiano di k domini $D_1\times D_2 \times ...\times D_k$ ha nome di \textit{relazione matematica}, introduciamo due definizioni.
+\section{Modello relazionale}
+    È già stato definito il Modello relazionale nella precedente sezione, si vuole ora approfondire l'argomento.
+    Il modello relazionale si basa sulla nozione matematica di relazione. Si definisce con \textit{dominio} (D) un insieme di valori, un sottoinsieme del prodotto cartesiano di k domini $D_1\times D_2 \times ...\times D_k$ ha nome di \textit{relazione matematica}, introduciamo due definizioni.
+    
+    \begin{itemize}
+        \item \textbf{grado}:
+            con grado k si intende la relazione matematica di k domini.
+
+        \item \textbf{attributo}:
+            un attributo è definito da un nome A e dal suo dominio dom(A)
+
+            \begin{tabular}{|c|}
+                \hline
+                \textbf{nome}\\
+                \hline
+                Nerone\\
+                \hline
+
+            \end{tabular}
+            
+            in cui $A=nome$, $dom(A)=str$ e l'attributo è l'insieme di questi.
         
+        \item \textbf{schema}:
+            Un insieme di attributi è detto schema, lo schema relazionale viene scritto come $R(A_1,A_2,...,A_k)$, descrive la sua struttura ed è invariante nel tempo.
+        
+        \item \textbf{istanza}:
+            l'instanza $r$ contiene tutti i valori correnti in una relazione $R$. 
+
+        \item \textbf{n-upla}:
+            una n-upla è un elemento della relazione (un elemento è la riga di una tabella), il numero di n-uple di una relazione è chiamata cardinalità. In ogni n-upla della relazione di ordine k, i componenti della n-upla sono ordinati secondo k, dati $D_1$,$D_2$,...,$D_k$, gli attributi saranno:
+
+            \begin{tabular}{|c |c |c |c|}
+                \hline
+                $attributo_1$&$attributo_2$&$...$&$attributo_k$\\
+                \hline
+            \end{tabular}
+            
+            una n-upla da un punto di vista matematico, è una funzione definita in $R$(relazione) che associa ogni attributo A in R ad un elemento del dominio $dom(a)$, il valore dell'attributo A equivale a $t[A]$ in cui t è tupla/n-upla.
+
+        \item \textbf{tabella}:
+            una tabella è l'insieme delle n-uple di una relazione.
+        \item \textbf{schema del database}:
+            lo schema del database è un insieme di schemi relazionali. Lo schema di un database relazionale è un insieme $R_1,R_2,...,R_n$ degli schemi. Un database relazionale è l'insieme $r_1,r_2,...,r_n$ in cui $r_1$ è l'istanza di $R_1$.
+            
+            \paragraph{esempio}
+                schema: info città (città,regione,popolazione)
+                
+                istanza:
+                \begin{tabular}{|c|c|c|}
+                    \hline
+                    Roma & Lazio & 3000000\\
+                    \hline
+                    Milano &Lombardia & 1500000\\
+                    \hline
+                    Genova & Liguria& 800000\\
+                    \hline
+                    Pisa & Toscana & 150000\\
+                    \hline
+                \end{tabular}
+        
+        
+    \end{itemize}
+
+    \paragraph{esempio}:
+        definendo $k=2$ e $D_1=\{bianco,nero\},D_2=\{0,1,2\}$, il prodotto cartesiano sarà $D_1\times D_2=\{(bianco,0),(bianco,1),(bianco,2),(nero,0),(nero,1),(nero,2)\}$, è possibile ora definire una relazione, un esempio di relazione è $\{(bianco,0),(bianco,2),(nero,1)\}$ ovvero una relazione di grado 2 con cardinalità 3.
+        Una tupla ovvero $t\in r$ è invece (bianco,0), t[1] rappresenta la stringa "bianco"
+
+    \begin{tcolorbox}[colback= green!10!white, colframe= green!40!black, title=Nota bene]
+
+        non è detto che ogni attributo abbia un valore, ad esempio, in un database degli studenti potrebbe essere previsto il numero di telefono, ma non è detto che ogni studente abbia un cellulare, per questo viene utilizzato il valore Null, il valore Null non corrisponde ad uno 0, non appartiene ad un dominio, se sullo stesso dominio ci sono più Null, non sono lo stesso valore.
+    \end{tcolorbox}
+
+    \subsection{vincoli di integrità}
+        In un database, ad esempio:
+
+        \begin{table}[h]
+            \centering
+
+            \begin{tabular}{|l|l|l|l|}
+                \hline
+                    matricola & nome & anno iscrizione & dipartimento \\ \hline
+                    1028 & Carlo magno & 1680 & A02 \\ \hline
+                    1029 & Lucio Dalla & 2003 & B01 \\ \hline
+                    1029 & Dario Lampa & 2015 & B08 \\ \hline
+            \end{tabular}
+
+        \hfill
+
+            \begin{tabular}{|l|l|l|l|}
+                \hline
+                    dipartimento &numero dipartimento \\ \hline
+                    storia& A02 \\ \hline
+                    chimica& B01 \\ \hline
+                    letterea& B03 \\ \hline
+            \end{tabular}
+
+        \end{table}
+        %
+        possiamo notare che:
         \begin{itemize}
-            \item \textbf{grado}:
-                con grado k si intende la relazione matematica di k domini.
-
-            \item \textbf{attributo}:
-                un attributo è definito da un nome A e dal suo dominio dom(A)
-
-                \begin{tabular}{|c|}
-                    \hline
-                    \textbf{nome}\\
-                    \hline
-                    Nerone\\
-                    \hline
-
-                \end{tabular}
-                
-                in cui $A=nome$, $dom(A)=str$ e l'attributo è l'insieme di questi.
-            
-            \item \textbf{schema}:
-                Un insieme di attributi è detto schema, lo schema relazionale viene scritto come $R(A_1,A_2,...,A_k)$, descrive la sua struttura ed è invariante nel tempo.
-            
-            \item \textbf{istanza}:
-                l'instanza $r$ contiene tutti i valori correnti in una relazione $R$. 
-
-            \item \textbf{n-upla}:
-                una n-upla è un elemento della relazione (un elemento è la riga di una tabella), il numero di n-uple di una relazione è chiamata cardinalità. In ogni n-upla della relazione di ordine k, i componenti della n-upla sono ordinati secondo k, dati $D_1$,$D_2$,...,$D_k$, gli attributi saranno:
-
-                \begin{tabular}{|c |c |c |c|}
-                    \hline
-                    $attributo_1$&$attributo_2$&$...$&$attributo_k$\\
-                    \hline
-                \end{tabular}
-                
-                una n-upla da un punto di vista matematico, è una funzione definita in $R$(relazione) che associa ogni attributo A in R ad un elemento del dominio $dom(a)$, il valore dell'attributo A equivale a $t[A]$ in cui t è tupla/n-upla.
-
-            \item \textbf{tabella}:
-                una tabella è l'insieme delle n-uple di una relazione.
-            \item \textbf{schema del database}:
-                lo schema del database è un insieme di schemi relazionali. Lo schema di un database relazionale è un insieme $R_1,R_2,...,R_n$ degli schemi. Un database relazionale è l'insieme $r_1,r_2,...,r_n$ in cui $r_1$ è l'istanza di $R_1$.
-                
-                \paragraph{esempio}
-                    schema: info città (città,regione,popolazione)
-                    
-                    istanza:
-                    \begin{tabular}{|c|c|c|}
-                        \hline
-                        Roma & Lazio & 3000000\\
-                        \hline
-                        Milano &Lombardia & 1500000\\
-                        \hline
-                        Genova & Liguria& 800000\\
-                        \hline
-                        Pisa & Toscana & 150000\\
-                        \hline
-                    \end{tabular}
-            
-            
+            \item due persone hanno la stessa matricola
+            \item una persona è iscritta dal 1680
+            \item il dipartimento B08 non esiste
         \end{itemize}
+        %
+        per evitare questi problemi si usano dei vincoli di integrità.
 
-        \paragraph{esempio}:
-            definendo $k=2$ e $D_1=\{bianco,nero\},D_2=\{0,1,2\}$, il prodotto cartesiano sarà $D_1\times D_2=\{(bianco,0),(bianco,1),(bianco,2),(nero,0),(nero,1),(nero,2)\}$, è possibile ora definire una relazione, un esempio di relazione è $\{(bianco,0),(bianco,2),(nero,1)\}$ ovvero una relazione di grado 2 con cardinalità 3.
+        \begin{tcolorbox}[colback= green!10!white, colframe= green!40!black, title=vincoli di integrità]
 
+            un vincolo di integrità è un un vincolo che ogni istanza del database deve rispettare per essere considerato corretto.
+            un vincolo può essere:
+            \begin{itemize}
+                \item \textbf{intrarelazionale}
+                    un vincolo definito all'interno di una relazione
+                
+                \item \textbf{interrelazionale}
+                    un vincolo definito su più relazioni
+            \end{itemize}
+
+        \end{tcolorbox}
+
+        si introducono i seguenti vincoli:
+        \begin{itemize}
+            \item \textbf{vincolo di unicità}:
+                questo vincolo indica impossibilità avere due tuple con lo stesso valore per un determinato attributo. la matricola deve essere diversa per ogni persona
+            \item \textbf{vincolo di esistenza del valore}:
+                questo vincolo indica l'impossibilità di avere Null come valore di un attributo specifico. il nome non può essere un Null
+            \item \textbf{vincolo di dominio}:
+                restrizioni imposte sul dominio di un attributo. anno iscrizione deve essere maggiore di 1970
+            \item \textbf{vincolo di tupla}:
+                restrizioni imposte su ogni tupla indipendentemente dalle altre
+        \end{itemize}
+%
+    \subsection{chiavi}
+        oltre a chiavare, definiamo cosa sono le chiavi.
+        \begin{tcolorbox}[colback= green!10!white, colframe= green!40!black, title=chiavi primarie]
+            una chiave primaria è un attributo o un insieme di attributi (del minimo numero possibile) che sono diversi per ogni tupla quindi rispettano in vincolo di unicità e ci permettono di riconoscere una singola entità. Le chiavi primarie devono anche rispettare il vincolo di esistenza.
+        \end{tcolorbox}
 \section{Algebra Relazionale}
 
 \section{Teoria Relazionale}

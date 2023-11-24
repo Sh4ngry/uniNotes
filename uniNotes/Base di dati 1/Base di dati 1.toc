@@ -1,13 +1,15 @@
 \contentsline {section}{\numberline {1}Introduzione ai database e ai DBMS}{2}{section.1}%
 \contentsline {paragraph}{Informazione strutturata}{2}{section*.2}%
 \contentsline {section}{\numberline {2}Sistema Informativo}{2}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Livelli di astrazione}{3}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.1}Livelli di astrazione}{2}{subsection.2.1}%
 \contentsline {subsection}{\numberline {2.2}Linguaggi per database}{3}{subsection.2.2}%
 \contentsline {subsection}{\numberline {2.3}Modello di dati}{3}{subsection.2.3}%
-\contentsline {subsection}{\numberline {2.4}Modello relazionale}{4}{subsection.2.4}%
+\contentsline {section}{\numberline {3}Modello relazionale}{4}{section.3}%
 \contentsline {paragraph}{esempio}{5}{section*.3}%
 \contentsline {paragraph}{esempio}{5}{section*.4}%
-\contentsline {section}{\numberline {3}Algebra Relazionale}{6}{section.3}%
-\contentsline {section}{\numberline {4}Teoria Relazionale}{6}{section.4}%
-\contentsline {section}{\numberline {5}Organizzazione Fisica}{6}{section.5}%
-\contentsline {section}{\numberline {6}Concorrenza}{6}{section.6}%
+\contentsline {subsection}{\numberline {3.1}vincoli di integrità}{5}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}chiavi}{6}{subsection.3.2}%
+\contentsline {section}{\numberline {4}Algebra Relazionale}{6}{section.4}%
+\contentsline {section}{\numberline {5}Teoria Relazionale}{6}{section.5}%
+\contentsline {section}{\numberline {6}Organizzazione Fisica}{6}{section.6}%
+\contentsline {section}{\numberline {7}Concorrenza}{6}{section.7}%
