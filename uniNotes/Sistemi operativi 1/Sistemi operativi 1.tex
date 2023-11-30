@@ -32,7 +32,7 @@
         tutti i software che non sono il kernel
 
         \item \textbf{kernel}:
-        il nucleo dell'OS e si occupa di:
+            il nucleo dell'OS e si occupa di:
         
             \begin{itemize}
                 \item \textbf{interfaccia hardware}
@@ -48,10 +48,24 @@
             \end{itemize}
             %
             un software effettua delle system calls ("syscall" per chi ha studiato assembly), il kernel traduce le chiamate in serie di comandi e le invia alla cpu.
-        
+            
         
     \end{itemize}
 
+    Esistono diverse strutture di Sistemi operativi:
+            \begin{itemize}
+                \item \textbf{struttura semplice}:
+                    non c'è differenza tra User-mode e Kernel-mode (se ne parlerà più avanti) quindi i software e l'utente hanno accesso completo al computer, questo rende questo tipo di OS come l'MS-DOS poco sicuro.
+                \item \textbf{Struttura a macro-kernel}:
+                    tutti i software del sistema operativo sono nel kernel e quindi operano in kernel-mode. Solo i software utente lavorano in user-mode
+                \item \textbf{Struttura a micro-kernel}:
+                    il kernel si occupa solamente di gestire le funzionalità base, come la gestione della memoria, lo scheduling della CPU e la comunicazione tra più processi, il resto dei software del sistema operativo viene effettuato in user-mode
+                \item \textbf{Struttura a kernel ibrido}:
+                    è un ibrido tra macro-kernel e micro-kernel,
+                \item \textbf{struttura a livelli}:
+                Il sistema operativo è organizzato ad anelli, in cui l'anello più piccolo è il kernel e ad ogni anello L i software che vi operano hanno a disposizione le 
+                \item \textbf{altri}
+            \end{itemize}
 \section{Un sistema computerizzato}
 
     \begin{center}
@@ -152,7 +166,7 @@
         %
         il sistema computerizzato, comunica con gli elementi I/O tramite dei software chiamati driver: SATA driver, IDE driver, USB driver, PCI bus driver ecc\ldots
 
-        \subsection{registri}
+    \subsection{registri}
          I dispositivi I/O hanno dei registri dedicati con cui comunicare con il sistema computerizzato.
 
         \begin{itemize}
@@ -259,5 +273,25 @@
         \end{itemize}
         %
         quando un programma effettua una syscall (System call), la richiede al sistema operativo tramite un \textbf{API} ovvero un interfaccia in grado di far comunicare il programma con il sistema operativo.
-        Una volta che il programma ha richiesto la syscall, l'API la convertirà in un interrupt richiamando l'IVT (Interrupt Vector Table) tramite cui verrà avviato il System Call Handler che contiene una tabella con tutte le Syscall possibili e chiama la funzione che implemente la Syscall richiesta
+        Una volta che il programma ha richiesto la syscall, l'API la convertirà in un interrupt richiamando l'IVT (Interrupt Vector Table) tramite cui verrà avviato il System Call Handler che contiene una tabella con tutte le Syscall possibili e chiama la funzione che implementa la Syscall richiesta.
+        Un qualsiasi evento che richiede il passaggio tra user mode e kernel mode si chiama \textit{trap di sistema}, degli esempi sono:
+
+        \begin{itemize}
+            \item \textbf{system calls}:
+                appena citate
+                
+            \item \textbf{interrupt}:
+                segnali inviati in maniera asincrona da una componente hardware all'os
+
+            \item \textbf{exceptions}:
+                gestione di errori dovuti ad eventi inattesi, svolti in maniera asincrona e innescati dai software
+        \end{itemize}
+%
+    \subsection{Scheduler}
+        Un computer è in grado di gestire più processi e la gestione di essi è affidata ad uno \textit{scheduler} che pianifica in quale ordine i processi vanno eseguiti, questo avviene tramite un algoritmo di schedule, che può eseguire lo schedule in modo tale da favorire (far eseguire prima) processi che occupano la risorsa per meno tempo possibile o fare uno schedule in base a quale processo è stato chiamato prima, secondo uno stack.
+        Per evitare che una task monopoliziz la risorsa, si implementa un timer, il quale allo scadere del tempo, genera un interrupt facendo indicando allo scheduler di passare al prossimo processo.
+        Siccome gli interrupt sono asincroni, potrebbero impedire l'esecuzione di un processo, sta all'hardware garantire che l'esecuzione di un processo non possa essere interrotto da un interrupt (tranne dal timer).
+
+\section{Struttura di un OS}
+
 \end{document}
