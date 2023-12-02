@@ -66,6 +66,9 @@
                 Il sistema operativo è organizzato ad anelli, in cui l'anello più piccolo è il kernel e ad ogni anello L i software che vi operano hanno a disposizione le 
                 \item \textbf{altri}
             \end{itemize}
+
+\newpage
+
 \section{Un sistema computerizzato}
 
     \begin{center}
@@ -292,6 +295,98 @@
         Per evitare che una task monopoliziz la risorsa, si implementa un timer, il quale allo scadere del tempo, genera un interrupt facendo indicando allo scheduler di passare al prossimo processo.
         Siccome gli interrupt sono asincroni, potrebbero impedire l'esecuzione di un processo, sta all'hardware garantire che l'esecuzione di un processo non possa essere interrotto da un interrupt (tranne dal timer).
 
-\section{Struttura di un OS}
+\newpage
+
+\section{Gestione dei processi}
+    \subsection{Programma e processo}
+        \begin{tcolorbox}[colback= green!10!white, colframe= green!40!black, title=Definizione programmi e processi]
+            %
+            Un programma è un file eseguibile che permette di eseguire dei compiti specifici, esso viene salvato in una memoria secondaria detta memoria di massa, come gli HDD o le SSD.
+            %
+            Un processo è un azione che un programma esegue, eseguendo in modo sequenziale tutti i processi si conclude il compito del programma, i processi vengono salvati in memoria principale ed eseguiti dalla CPU. 
+            
+        \end{tcolorbox}
+    %
+        Ogni programma possiede la stessa quantità di VAS (virtual address space) o spazio di indirizzi virtuale, in cui insiemi di indirizzi di memoria sono dedicati a specifici compiti:
+        
+        \begin{itemize}
+            \item \textbf{Text}:
+                contiene le istruzioni dell'eseguibile
+            \item  \textbf{Data}:
+                contiene i valori statici (fissi) inizializzati all'avvio
+            \item  \textbf{BSS}:
+                contiene i valori statici non inizializzati all'avvio
+            \item \textbf{Stack}:
+                contiene i dati utilizzati da una funzione durante la sua esecuzione
+            \item \textbf{Heap}:
+                contiene i dati dinamici ossia dati di dimensione variabile
+            \item \textbf{Spazio libero}:
+                utilizzato dallo stack e dall'heap come spazio di espansione  
+        \end{itemize}
+        %
+        Un processo passa attraverso alcune fasi da quando viene avviato a quando viene terminato:
+%
+        \begin{center}
+            \includegraphics[width=0.6\textwidth]{immagini/Process-State-Diagram.jpg}
+        \end{center}
+
+        \begin{itemize}
+            \item \textbf{New}:
+                il processo è stato appena inizializzato
+            \item \textbf{Ready}:
+                il processo è pronto per essere eseguito dalla CPU, aspetta di essere schedulato
+            \item \textbf{Running}:
+                il processo sta venendo eseguito dalla CPU
+            \item \textbf{Waiting}:
+                il processo sta aspettando che qualcosa accada, infatti alcuni processi possono
+                aver bisogno di un evento per proseguire, ad esempio un input
+            \item \textbf{Terminated}:
+                il processo è stato concluso e viene terminato dall'OS
+        \end{itemize}
+        %
+        \begin{tcolorbox}[colback= green!10!white, colframe=green!40!black, title= Processo padre e processo figlio]
+            %
+            Un processo può avviare un altro processo, il processo creatore viene detto processo padre, il processo creato viene detto processo figlio.
+        \end{tcolorbox}
+        %
+        Ogni processo ha un PID (Process IDentifier), ovvero un numero utile ad identificare un processo ed un PPID (Parent Process IDentifier) ossia un numero utile ad identificare il processo padre. Un ottimo esempio di processo padre e processo figlio è lo sched e l'init in un sistema operativo UNIX: lo scheduler, chiamato \textit{sched} è il primo processo avviato dal sistema operativo, esso ha PID=0, lo scheduler avvia poi il processo \textit{init} con PID=1. Il processo init avvia tutti i processi \textit{daemon} ossia i processi in background e anche tutti i processi relativi al login degli utenti.In questo modo lo sched è il processo antenato, e padre di init, e i processi daemon e di login sono figli di init.
+
+        \begin{tcolorbox}[colback= green!10!white, colframe=green!40!black, title= fork() e spawn()]
+            %
+            la funzione per creare un processo figlio, cambia in base all'OS:
+
+            \begin{itemize}
+                
+                \item Su windows si utilizza la syscall spawn() per creare un processo figlio diverso dal padre, con istruzioni risorse e PCB diversi dal processo generatore (processo padre)
+                
+                \item Su Unix si utilizza la syscall fork() che crea un processo figlio identico al processo padre con le stesse risorse e istruzioni, ma con un PCB differente. Per ottenere lo stesso effetto di spawn(), si può utilizzare exec() dopo il fork(), da come si può intuire, viene creato un processo figlio identico al padre e con exec() si esegue un altro programma
+            \end{itemize}
+        \end{tcolorbox}
+        %
+        \textbf{SI OSSERVA CHE}
+        Nel codice, la funzione pid=fork(), crea un processo figlio identico al processo padre (le stesse linee di codice), la funzione ritorna 0 al processo figlio assegnando 0 alla variabile pid e ritorna il PID del figlio alla variabile pid del processo padre, in base al valore della variabile pid nel codice si esegue un blocco di codice diverso tramite un if. 
+        
+    \subsection{Process Control Block}
+        \begin{tcolorbox}[colback= green!10!white, colframe= green!40!black, title=Program Control Block]
+            Il PCB è la struttura dati di un processo, ne traccia lo stato e la posizione in memoria.
+            A più processi corrispondono più PCB.
+        \end{tcolorbox}
+        %
+        Un PCB è contiene diverse informazioni, in base all'implementazione possono essere di più o di meno, ma in generale sono presenti:
+        %
+        \begin{itemize}
+            \item \textbf{Process state}:
+                contenente lo stato del processo.
+            \item \textbf{Process number}:
+                contenente il numero identificativo del processo.
+            \item \textbf{Stack pointer, Program counter e altri puntatori}:
+                il puntatore al registro in cima allo stack, il puntatore che indica il processo a seguire, il puntatore al processo padre, il puntatore ai processi figli.
+            \item \textbf{informazioni per lo scheduling}:
+                contenente informazioni utili allo scheduling, come l'indicatore di priorità e il puntatore alla state queue.
+            \item \textbf{informazioni per il memory management}:
+                contenente informazioni per la gestione della memoria del processo
+            \item \textbf{informazioni sullo stato I/O del processo}:
+                auto esplicatorio
+        \end{itemize}
 
 \end{document}

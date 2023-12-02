@@ -10,4 +10,6 @@
 \contentsline {subsubsection}{\numberline {2.7.1}Kernel/User Mode}{6}{subsubsection.2.7.1}%
 \contentsline {subsubsection}{\numberline {2.7.2}system calls}{7}{subsubsection.2.7.2}%
 \contentsline {subsection}{\numberline {2.8}Scheduler}{8}{subsection.2.8}%
-\contentsline {section}{\numberline {3}Struttura di un OS}{8}{section.3}%
+\contentsline {section}{\numberline {3}Gestione dei processi}{9}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Programma e processo}{9}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Process Control Block}{10}{subsection.3.2}%

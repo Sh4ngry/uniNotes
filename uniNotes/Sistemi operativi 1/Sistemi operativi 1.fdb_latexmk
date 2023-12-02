@@ -1,10 +1,10 @@
 # Fdb version 4
-["pdflatex"] 1701361485 "c:/Users/ricca/Documents/uniNotes/uniNotes/Sistemi operativi 1/Sistemi operativi 1.tex" "Sistemi operativi 1.pdf" "Sistemi operativi 1" 1701361487 0
-  "Sistemi operativi 1.aux" 1701361487 1819 ff0fbc86abf3372391852bb997619a0e "pdflatex"
-  "Sistemi operativi 1.out" 1701361487 1794 26fe6242f4db48d6143f991c8f863895 "pdflatex"
-  "Sistemi operativi 1.tex" 1700859243 17226 24c1df2b824ebbde4fd06f2dc798a7a6 ""
-  "Sistemi operativi 1.toc" 1701361487 1052 f255c138eff219c425a4b9b0d004462a "pdflatex"
-  "c:/Users/ricca/Documents/uniNotes/uniNotes/Sistemi operativi 1/Sistemi operativi 1.tex" 1700859243 17226 24c1df2b824ebbde4fd06f2dc798a7a6 ""
+["pdflatex"] 1701517329 "c:/Users/ricca/Documents/uniNotes/uniNotes/Sistemi operativi 1/Sistemi operativi 1.tex" "Sistemi operativi 1.pdf" "Sistemi operativi 1" 1701517331 0
+  "Sistemi operativi 1.aux" 1701517330 2079 4d2bf523017a3ad18425b39117faaed7 "pdflatex"
+  "Sistemi operativi 1.out" 1701517330 2139 2fb895dae0cf3d0c82df7b5117134fda "pdflatex"
+  "Sistemi operativi 1.tex" 1701517328 23570 0ea75cc40b7d9a877a0247d59cf5406f ""
+  "Sistemi operativi 1.toc" 1701517330 1229 01fbcd0cba716951fec387e8f34c51ab "pdflatex"
+  "c:/Users/ricca/Documents/uniNotes/uniNotes/Sistemi operativi 1/Sistemi operativi 1.tex" 1701517328 23570 0ea75cc40b7d9a877a0247d59cf5406f ""
   "c:/texlive/2023/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1698319853 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "c:/texlive/2023/texmf-dist/fonts/map/fontname/texfonts.map" 1698323429 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2023/texmf-dist/fonts/tfm/jknappen/ec/tcrm1000.tfm" 1698320580 1536 e07581a4bb3136ece9eeb4c3ffab8233 ""
@@ -184,6 +184,7 @@
   "c:/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1698329228 4750288 f1f34006308c654e053d5a8459362656 ""
   "c:/texlive/2023/texmf-var/web2c/pdftex/pdflatex.fmt" 1698329548 8208524 8ec792fc2ceb3c5828c91fe1a619e497 ""
   "c:/texlive/2023/texmf.cnf" 1698329203 713 e69b156964470283e0530f5060668171 ""
+  "immagini/Process-State-Diagram.jpg" 1701439859 35719 3d0b366cd8e42b1b6b17015f1097da00 ""
   "immagini/architettura von neuman.png" 1700846014 71780 327dea459ffba9ccb8eeb6f0e5df1e4f ""
   "immagini/gerarchia memorie.png" 1700846014 347677 98285c759c65e6d85a09d9e5eea868ad ""
   "immagini/immagine.png" 1700846014 248090 377cc2b31ad3fdde4851a5609b4558a2 ""
