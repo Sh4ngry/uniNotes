@@ -290,83 +290,59 @@
                 gestione di errori dovuti ad eventi inattesi, svolti in maniera asincrona e innescati dai software
         \end{itemize}
 %
-    \subsection{Scheduler}
-        Un computer è in grado di gestire più processi e la gestione di essi è affidata ad uno \textit{scheduler} che pianifica in quale ordine i processi vanno eseguiti, questo avviene tramite un algoritmo di schedule, che può eseguire lo schedule in modo tale da favorire (far eseguire prima) processi che occupano la risorsa per meno tempo possibile o fare uno schedule in base a quale processo è stato chiamato prima, secondo uno stack.
-        Per evitare che una task monopoliziz la risorsa, si implementa un timer, il quale allo scadere del tempo, genera un interrupt facendo indicando allo scheduler di passare al prossimo processo.
-        Siccome gli interrupt sono asincroni, potrebbero impedire l'esecuzione di un processo, sta all'hardware garantire che l'esecuzione di un processo non possa essere interrotto da un interrupt (tranne dal timer).
+    
 
 \newpage
 
 \section{Gestione dei processi}
-    \subsection{Programma e processo}
-        \begin{tcolorbox}[colback= green!10!white, colframe= green!40!black, title=Definizione programmi e processi]
-            %
-            Un programma è un file eseguibile che permette di eseguire dei compiti specifici, esso viene salvato in una memoria secondaria detta memoria di massa, come gli HDD o le SSD.
-            %
-            Un processo è un azione che un programma esegue, eseguendo in modo sequenziale tutti i processi si conclude il compito del programma, i processi vengono salvati in memoria principale ed eseguiti dalla CPU. 
-            
-        \end{tcolorbox}
-    %
-        Ogni programma possiede la stessa quantità di VAS (virtual address space) o spazio di indirizzi virtuale, in cui insiemi di indirizzi di memoria sono dedicati a specifici compiti:
-        
-        \begin{itemize}
-            \item \textbf{Text}:
-                contiene le istruzioni dell'eseguibile
-            \item  \textbf{Data}:
-                contiene i valori statici (fissi) inizializzati all'avvio
-            \item  \textbf{BSS}:
-                contiene i valori statici non inizializzati all'avvio
-            \item \textbf{Stack}:
-                contiene i dati utilizzati da una funzione durante la sua esecuzione
-            \item \textbf{Heap}:
-                contiene i dati dinamici ossia dati di dimensione variabile
-            \item \textbf{Spazio libero}:
-                utilizzato dallo stack e dall'heap come spazio di espansione  
-        \end{itemize}
+
+    \begin{tcolorbox}[colback= green!10!white, colframe= green!40!black, title=Definizione programmi e processi]
         %
-        Un processo passa attraverso alcune fasi da quando viene avviato a quando viene terminato:
+        Un programma è un file eseguibile che permette di eseguire dei compiti specifici, esso viene salvato in una memoria secondaria detta memoria di massa, come gli HDD o le SSD.
+        %
+        Un processo è un azione che un programma esegue, eseguendo in modo sequenziale tutti i processi si conclude il compito del programma, i processi vengono salvati in memoria principale ed eseguiti dalla CPU. 
+        
+    \end{tcolorbox}
 %
-        \begin{center}
-            \includegraphics[width=0.6\textwidth]{immagini/Process-State-Diagram.jpg}
-        \end{center}
+    Ogni programma possiede la stessa quantità di VAS (virtual address space) o spazio di indirizzi virtuale, in cui insiemi di indirizzi di memoria sono dedicati a specifici compiti:
+    
+    \begin{itemize}
+        \item \textbf{Text}:
+            contiene le istruzioni dell'eseguibile
+        \item  \textbf{Data}:
+            contiene i valori statici (fissi) inizializzati all'avvio
+        \item  \textbf{BSS}:
+            contiene i valori statici non inizializzati all'avvio
+        \item \textbf{Stack}:
+            contiene i dati utilizzati da una funzione durante la sua esecuzione
+        \item \textbf{Heap}:
+            contiene i dati dinamici ossia dati di dimensione variabile
+        \item \textbf{Spazio libero}:
+            utilizzato dallo stack e dall'heap come spazio di espansione  
+    \end{itemize}
+    %
+    Un processo passa attraverso alcune fasi da quando viene avviato a quando viene terminato:
+%
+    \begin{center}
+        \includegraphics[width=0.6\textwidth]{immagini/Process-State-Diagram.jpg}
+    \end{center}
 
-        \begin{itemize}
-            \item \textbf{New}:
-                il processo è stato appena inizializzato
-            \item \textbf{Ready}:
-                il processo è pronto per essere eseguito dalla CPU, aspetta di essere schedulato
-            \item \textbf{Running}:
-                il processo sta venendo eseguito dalla CPU
-            \item \textbf{Waiting}:
-                il processo sta aspettando che qualcosa accada, infatti alcuni processi possono
-                aver bisogno di un evento per proseguire, ad esempio un input
-            \item \textbf{Terminated}:
-                il processo è stato concluso e viene terminato dall'OS
-        \end{itemize}
-        %
-        \begin{tcolorbox}[colback= green!10!white, colframe=green!40!black, title= Processo padre e processo figlio]
-            %
-            Un processo può avviare un altro processo, il processo creatore viene detto processo padre, il processo creato viene detto processo figlio.
-        \end{tcolorbox}
-        %
-        Ogni processo ha un PID (Process IDentifier), ovvero un numero utile ad identificare un processo ed un PPID (Parent Process IDentifier) ossia un numero utile ad identificare il processo padre. Un ottimo esempio di processo padre e processo figlio è lo sched e l'init in un sistema operativo UNIX: lo scheduler, chiamato \textit{sched} è il primo processo avviato dal sistema operativo, esso ha PID=0, lo scheduler avvia poi il processo \textit{init} con PID=1. Il processo init avvia tutti i processi \textit{daemon} ossia i processi in background e anche tutti i processi relativi al login degli utenti.In questo modo lo sched è il processo antenato, e padre di init, e i processi daemon e di login sono figli di init.
+    \begin{itemize}
+        \item \textbf{New}:
+            il processo è stato appena inizializzato
+        \item \textbf{Ready}:
+            il processo è pronto per essere eseguito dalla CPU, aspetta di essere schedulato
+        \item \textbf{Running}:
+            il processo sta venendo eseguito dalla CPU
+        \item \textbf{Waiting}:
+            il processo sta aspettando che qualcosa accada, infatti alcuni processi possono
+            aver bisogno di un evento per proseguire, ad esempio un input
+        \item \textbf{Terminated}:
+            il processo è stato concluso e viene terminato dall'OS
+    \end{itemize}
 
-        \begin{tcolorbox}[colback= green!10!white, colframe=green!40!black, title= fork() e spawn()]
-            %
-            la funzione per creare un processo figlio, cambia in base all'OS:
-
-            \begin{itemize}
-                
-                \item Su windows si utilizza la syscall spawn() per creare un processo figlio diverso dal padre, con istruzioni risorse e PCB diversi dal processo generatore (processo padre)
-                
-                \item Su Unix si utilizza la syscall fork() che crea un processo figlio identico al processo padre con le stesse risorse e istruzioni, ma con un PCB differente. Per ottenere lo stesso effetto di spawn(), si può utilizzare exec() dopo il fork(), da come si può intuire, viene creato un processo figlio identico al padre e con exec() si esegue un altro programma
-            \end{itemize}
-        \end{tcolorbox}
-        %
-        \textbf{SI OSSERVA CHE}
-        Nel codice, la funzione pid=fork(), crea un processo figlio identico al processo padre (le stesse linee di codice), la funzione ritorna 0 al processo figlio assegnando 0 alla variabile pid e ritorna il PID del figlio alla variabile pid del processo padre, in base al valore della variabile pid nel codice si esegue un blocco di codice diverso tramite un if. 
-        
     \subsection{Process Control Block}
+
         \begin{tcolorbox}[colback= green!10!white, colframe= green!40!black, title=Program Control Block]
             Il PCB è la struttura dati di un processo, ne traccia lo stato e la posizione in memoria.
             A più processi corrispondono più PCB.
@@ -387,6 +363,95 @@
                 contenente informazioni per la gestione della memoria del processo
             \item \textbf{informazioni sullo stato I/O del processo}:
                 auto esplicatorio
+        
         \end{itemize}
+        %
 
+    \subsection{Processo padre e figlio}
+        %
+        \begin{tcolorbox}[colback= green!10!white, colframe=green!40!black, title= Processo padre e processo figlio]
+            %
+            Un processo può avviare un altro processo, il processo creatore viene detto processo padre, il processo creato viene detto processo figlio.
+        \end{tcolorbox}
+        %
+        Ogni processo ha un PID (Process IDentifier), ovvero un numero utile ad identificare un processo ed un PPID (Parent Process IDentifier) ossia un numero utile ad identificare il processo padre. Un ottimo esempio di processo padre e processo figlio è lo sched e l'init in un sistema operativo UNIX: lo scheduler, chiamato \textit{sched} è il primo processo avviato dal sistema operativo, esso ha PID=0, lo scheduler avvia poi il processo \textit{init} con PID=1. Il processo init avvia tutti i processi \textit{daemon} ossia i processi in background e anche tutti i processi relativi al login degli utenti.In questo modo lo sched è il processo antenato, e padre di init, e i processi daemon e di login sono figli di init.
+
+        \subsubsection{Creazione di un processo}
+
+            \begin{tcolorbox}[colback= green!10!white, colframe=green!40!black, title= fork() e spawn()]
+                %
+                la funzione per creare un processo figlio, cambia in base all'OS:
+
+                \begin{itemize}
+                    
+                    \item Su windows si utilizza la syscall spawn() per creare un processo figlio diverso dal padre, con istruzioni risorse e PCB diversi dal processo generatore (processo padre)
+                    
+                    \item Su Unix si utilizza la syscall fork() che crea un processo figlio identico al processo padre con le stesse risorse e istruzioni, ma con un PCB differente. Per ottenere lo stesso effetto di spawn(), si può utilizzare exec() dopo il fork(), da come si può intuire, viene creato un processo figlio identico al padre e con exec() si esegue un altro programma
+                \end{itemize}
+            \end{tcolorbox}
+            %
+            \textbf{SI OSSERVA CHE}
+            Nel codice, la funzione pid=fork(), crea un processo figlio identico al processo padre (le stesse linee di codice), la funzione ritorna 0 al processo figlio assegnando 0 alla variabile pid e ritorna il PID del figlio alla variabile pid del processo padre, in base al valore della variabile pid nel codice si esegue un blocco di codice diverso tramite un if.
+
+        \subsubsection{Terminazione di un processo}
+            
+            Un processo può terminare se stesso utilizzando la syscall exit (nel codice la funzione "exit()" che ritorna un valore intero nel caso il processo padre stia utilizzando "wait()"), un processo può anche essere terminato dal processo padre o dall'OS nel caso venga utilizzato il comando kill.
+            Quando un processo viene terminato e vengono ritornati i seguenti valori al processo padre in caso esso stia utilizzando "wait()": lo stato di processo terminato, il tempo di esecuzione, codice di esito dell'esecuzione, avviene anche la liberazione di tutte le risorse utilizzate dal processo (le finestre vengono chiuse, i dati vengono de-allocati ecc...).
+
+            \begin{tcolorbox}[colback= green!10!white, colframe=green!40!black, title=processo orfano e processo zombie]
+                %
+                Quando il processo padre non termina correttamente il processo figlio, possono avvenire 2 cose:
+
+                \begin{itemize}
+                    
+                    \item \textbf{Processo orfano}:
+                        quando il processo padre viene terminato, ma il processo figlio no, esso viene chiamato processo orfano e viene adottato dall'OS che si occuperà di terminarlo.
+                    
+                    \item \textbf{Processo zombie}:
+                        quando il processo figlio tenta di terminare, ma il processo padre non sta usando wait() prende nome di processo zombie, che viene adottato dall'OS per essere poi terminato.
+                \end{itemize}
+
+            \end{tcolorbox}
+    
+    \subsection{Comunicazione tra processi}
+            Un processo può essere isolato, ossia può compiere il suo lavoro a prescindere da altri processi, oppure cooperativo, in cui ha bisogno di comunicare con un altro processo per influenzarlo o essere influenzato.
+            Ci sono due modi per il quale più processi possono comunicare.
+            \begin{itemize}
+                \item \textbf{Memoria condivisa}:
+                    la memoria di un processo è inizialmente nell'address space di un processo, tramite system calls si permette l'accesso di quella memoria ad un altro processo.
+                    
+                \item \textbf{Messaggi}:
+                    tramite delle system calls i processi si inviano dei "messaggi" contenenti i dati da comunicare
+            \end{itemize}
+
+            le differenze principali sono che:
+            \begin{itemize}
+                \item il metodo della memoria condivisa è più lento da inizializzare, ma una volta inizializzato è il più veloce nell'eseguire la comunicazione, è infatti preferibile quando la comunicazione avviene su un singolo computer e la quantità dei dati e la frequenza sono alti.
+                \item il metodo dei messaggi è preferibile quando si devono scambiare pochi dati tra due computers
+            \end{itemize}
+    \subsection{Scheduling}
+
+        Un computer è in grado di gestire più processi e la gestione di essi è affidata ad uno \textit{scheduler} che pianifica in quale ordine i processi vanno eseguiti, questo avviene tramite un algoritmo di schedule, che può eseguire lo schedule in modo tale da favorire (far eseguire prima) processi che occupano la risorsa per meno tempo possibile o fare uno schedule in base a quale processo è stato chiamato prima, secondo uno stack.
+        Per evitare che una task monopolizzi la risorsa, si implementa un timer, il quale allo scadere del tempo, genera un interrupt indicando allo scheduler di passare al prossimo processo.
+        Siccome gli interrupt sono asincroni, potrebbero impedire l'esecuzione di un processo, sta all'hardware garantire che l'esecuzione di un processo non possa essere interrotto da un interrupt.
+
+        \subsubsection{Process scheduling}
+
+        Per ogni stato possibile di un processo, vi è un Process State Queue, in cui i PCB vengono messi in coda, quando l'OS cambia lo stato del processo, il PCB del processo viene spostato ad un'altra coda(queue) vi è una coda anche per ogni dispositivo I/O.
+        Il numero di PCB che possono essere contemporaneamente nella running queue dipende strettamente dal numero di core della CPU.
+        
+        \begin{tcolorbox}[colback= green!10!white, colframe=green!40!black, title=Context Switch]
+
+            Il context switch è la procedura che la CPU esegue per mettere interrompere temporaneamente un processo in esecuzione permettendo al processo in ready di essere eseguito
+        \end{tcolorbox}
+%
+        \begin{enumerate}
+            \item il processo 1 sta venendo eseguito
+            \item avviene una system call o un interrupt
+            \item lo stato del processo 1 viene salvato in $PCB_1$.
+            \item il processo 2, primo nello stato di ready viene eseguito
+            \item avviene una system call o un Interrupt
+            \item lo stato del processo 2 viene salvato in $PCB_2$
+            \item viene ricaricato ed eseguito il processo 1, cosa possibile poichè in $PCB_1$ si era salvato lo stato del processo 1
+        \end{enumerate}
 \end{document}
