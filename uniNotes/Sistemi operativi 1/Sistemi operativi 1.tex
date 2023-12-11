@@ -421,7 +421,21 @@
                     la memoria di un processo è inizialmente nell'address space di un processo, tramite system calls si permette l'accesso di quella memoria ad un altro processo.
                     
                 \item \textbf{Messaggi}:
-                    tramite delle system calls i processi si inviano dei "messaggi" contenenti i dati da comunicare
+                    tramite delle system calls i processi si inviano dei "messaggi" contenenti i dati da comunicare, la comunicazione può essere diretta o indiretta.
+                    \begin{itemize}
+                        \item \textbf{Diretta} il processo A deve sapere il nome del processo processo B prima di inviare il messaggio e viceversa
+                        \item \textbf{Indiretta} i processi comunicano tramite delle porte o un mailbox, non hanno necessità di sapere il nome del processo
+                    \end{itemize}
+                    %
+                    è inoltre necessario specificare la tipologia di queue per i messaggi, vi sono 3 possibili queue:
+                    \begin{itemize}
+                        \item \textbf{Zero capacity}:
+                            il progaramma 1 invia un messaggio e il programma 2 deve averlo ricevuto prima che il programma 1 ne invii un altro
+                        \item \textbf{Bounded capacity}:
+                            il processo 1 può inviare un insieme di messaggi limitati al processo 2 a prescindere se esso li abbia ricevuti
+                        \item \textbf{Unbounded capacity}:
+                            come il Bounded capacity, ma illimitato
+                    \end{itemize}
             \end{itemize}
 
             le differenze principali sono che:
@@ -454,4 +468,33 @@
             \item lo stato del processo 2 viene salvato in $PCB_2$
             \item viene ricaricato ed eseguito il processo 1, cosa possibile poichè in $PCB_1$ si era salvato lo stato del processo 1
         \end{enumerate}
+        
+    \subsection{CPU Scheduler}
+        lo scheduler è il processo che si occupa di "pianificare" i processi da eseguire dalla ready queue in base a degli algoritmi. il CPU scheduler può essere:
+        \begin{itemize}
+            \item \textbf{preemptive}:
+                una volta avviato un processo, lo scheduler non può fare nulla se non aspettare che il processo termini
+            \item \textbf{non preemptive}:
+                una volta avviato il processo, lo scheduler può decidere se continuare ad eseguire il processo attuale oppure eseguirne uno nuovo
+                
+        \end{itemize}
+
+        Quando lo scheduler passa il controllo della CPU al processo selezionato, viene utilizzato il dispatcher, un modulo dell'OS a cui è dedicata questa funzione.
+
+        \subsubsection{tempo dello schedule}
+            Un processo ha una durata di vita molto breve, si è già visto quali sono i suoi stadi, si indecranno adesso, i periodi di vita:
+            \begin{itemize}
+                \item \textbf{arrival time}:
+                    il tempo di arrivo di del processo nella ready queue
+                \item \textbf{start time}:
+                    il tempo di avvio del processo
+                \item \textbf{completion time}:
+                    il tempo in di fine esecuzione del processo
+                \item \textbf{burst time}:
+                    il tempo impiegato dalla cpu per eseguire il processo
+                \item \textbf{turnaround time}:
+                    tempo trascorso tra completion time e arrival time
+                \item \textbf{wait time}:
+                    tempo trascorso tra turnaround e burst time
+            \end{itemize}
 \end{document}
